@@ -75,3 +75,24 @@ get ('/brands') do
   @brands = Brand.all
   erb(:brands)
 end
+
+patch("/store/:id") do
+  store_id=Integer(params.fetch('id'))
+  name = params.fetch("name")
+  address = params.fetch("address")
+  @store = Store.find(params.fetch("id").to_i())
+  @store.update({:name => name, :address => address})
+  redirect("/store/#{store_id}/view/?")
+end
+
+get("/store/:id/edit") do
+  @store = Store.find(params.fetch("id").to_i())
+  erb(:store_edit)
+end
+
+delete("/store/:id") do
+  store_id=Integer(params.fetch("id"))
+  store_to_be_deleted= Store.find(store_id)
+  store_to_be_deleted.destroy()
+  redirect("/")
+end

@@ -1,6 +1,6 @@
 class Brand < ActiveRecord::Base
   has_many :brands, through: :stores_brands
-  has_many :stores_brands
+  has_many :stores_brands, dependent: :destroy
   validates(:name, :presence => true)
 
   before_save(:capitalize_name)
