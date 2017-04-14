@@ -1,0 +1,30 @@
+<h1>Top Stores</h1>
+<ul>
+  <% @topstores.each do |store| %>
+    <li><a href="/store/<%= store['id']%>/view"><b><%= store['name']%></b> <%=(store['avg']).to_f.round(2)%></a></li>
+  <% end %>
+</ul>
+
+<h1>All Stores</h1>
+<ul>
+  <% @stores.each do |store| %>
+    <li><b><%= store.name%><a href="/store/<%= store.id%>/view"></b> View this store</a></li>
+  <% end %>
+</ul>
+
+<h1>All Brands</h1>
+<ul>
+  <% @brands.each do |brand|%>
+    <img class="brand_logo" style="width: 150px;" src="<%=brand.brandimage%>"/>
+    </form>
+  <%end%>
+</ul>
+
+  <h3>Create Store</h3>
+  <form action='/store' method='post'>
+    <label for='name'>Name</label><br>
+    <input type='text' name='name' id='name' required="true"><br>
+    <label for='name'>Address</label><br>
+    <textarea style="height:100px;width:300px"  type='text' name='address' id='address' required="true"></textarea><br><br>
+    <button type='submit'>Submit</button>
+  </form>

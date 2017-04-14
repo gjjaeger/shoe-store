@@ -1,0 +1,60 @@
+<div class="row">
+  <div class="col-md-6">
+    <h1><%= @store.name()%></h1>
+    <% if @store.brands.any? %>
+      <ul>
+        <% @store.brands.each do |brand|%>
+          <span><%= brand.name%> </span>
+          <img class="brand_logo" style="width: 150px;" src="<%=brand.brandimage%>"/>
+          <form action="/brand" method="post">
+            <input type="hidden" name="store_id" value="<%=@store.id%>">
+            <input type='hidden' name='brand_id' value='<%= brand.id%>'>
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit" class="btn btn-danger">X</button>
+          </form>
+        <%end%>
+      </ul>
+    <%end%>
+    <form action="/brand" method="post">
+      <input type="hidden" name="store_id" value="<%=@store.id%>">
+      <!-- <input type="hidden" name="store_id" value="<%=@store.id%>">
+      <input  type='text' name='brand'> -->
+      <select name='brand'>
+        <%@brands.each do |brand|%>
+          <option value="<%=brand.id%>"><%=brand.name%></option>
+        <%end%>
+      </select>
+      <button class="btn" type='submit'>Add Brand to Store</button>
+    </form>
+
+    <a href="/store/<%=@store.id%>/view/?add_new_brand=true" class="btn btn-sm">Create Brand</a>
+    <%if @add_new_brand%>
+      <form action='/brand/new' method='post'>
+        <input type="hidden" name="store_id" value="<%=@store.id%>">
+        <label for='brand'>Brand</label><br>
+        <input type='text' name='brand' id='name' required="true"><br>
+        <label for='logo'>Brand logo</label><br>
+        <input type='text' name='logo' id='logo'><br>
+        <button type='submit'>Submit</button>
+      </form>
+    <%end%>
+
+    <h3><%=@average_rating%> <small>(<%=@store.ratings.length%> reviews)</small></h3>
+    <textarea readonly style="height:150px;width:500px"><%= @store.address%></textarea>
+
+  </div>
+  <div class="col-md-6">
+    <h4>Reviews</h4>
+    <ul>
+      <% @store.ratings.each do |rating|%>
+        <li><b><%=rating.name%></b> <%=rating.score%></li>
+      <%end%>
+    </ul>
+    <form action="/rating" method="post">
+      <input type="hidden" name="store_id" value="<%=@store.id%>">
+      <input  type='number' name='rating'>
+      <input  type='text' name='user_name'>
+      <button class="btn" type='submit'>Add Rating</button>
+    </form>
+  </div>
+</div>
